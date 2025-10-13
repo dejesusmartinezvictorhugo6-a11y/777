@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vector's 666 Casino</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+      body {
+        font-family: 'Orbitron', sans-serif;
+      }
+      @keyframes fade-in-up {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .animate-fade-in-up {
+        animation: fade-in-up 0.5s ease-out forwards;
+      }
+      
+      @keyframes spin-reel {
+        from {
+          transform: translateY(-80%);
+        }
+        to {
+          transform: translateY(0);
+        }
+      }
+      .animate-spin-reel {
+        animation: spin-reel 0.2s linear infinite;
+      }
+
+      @keyframes roulette-spin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(1440deg); }
+      }
+      .animate-roulette-spin {
+        animation: roulette-spin 4s cubic-bezier(0.3, 1, 0.7, 1);
+      }
+
+      @keyframes fade-in {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+      .animate-fade-in {
+        animation: fade-in 0.5s ease-out forwards;
+      }
+
+      @keyframes fade-out {
+        from { opacity: 1; }
+        to { opacity: 0; }
+      }
+      .animate-fade-out {
+        animation: fade-out 0.5s ease-in forwards;
+      }
+
+      @keyframes wag-tail {
+        0%, 100% { transform: rotate(-5deg); }
+        50% { transform: rotate(10deg); }
+      }
+      .animate-wag-tail {
+        animation: wag-tail 2.5s ease-in-out infinite;
+        transform-origin: 0% 50%;
+      }
+
+      @keyframes devil-glow {
+        0%, 100% {
+          filter: drop-shadow(0 0 5px rgba(239, 68, 68, 0.7)) drop-shadow(0 0 10px rgba(239, 68, 68, 0.5));
+        }
+        50% {
+          filter: drop-shadow(0 0 10px rgba(239, 68, 68, 1)) drop-shadow(0 0 20px rgba(239, 68, 68, 0.7));
+        }
+      }
+      .animate-devil-glow {
+        animation: devil-glow 3s ease-in-out infinite;
+      }
+
+      @keyframes jackpot-text-glow {
+        0%, 100% {
+            text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fef08a, 0 0 20px #fef08a, 0 0 25px #fef08a, 0 0 30px #fef08a, 0 0 35px #fef08a;
+        }
+        50% {
+            text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #facc15, 0 0 40px #facc15, 0 0 50px #facc15, 0 0 60px #facc15, 0 0 70px #facc15;
+        }
+      }
+      .animate-jackpot-text-glow {
+        animation: jackpot-text-glow 2s ease-in-out infinite;
+      }
+
+      @keyframes symbol-win-glow {
+        0%, 100% {
+          box-shadow: 0 0 15px 5px rgba(250, 204, 21, 0.8), inset 0 0 5px 2px rgba(250, 204, 21, 0.6);
+          transform: scale(1.05);
+        }
+        50% {
+          box-shadow: 0 0 25px 10px rgba(250, 204, 21, 1), inset 0 0 10px 4px rgba(250, 204, 21, 0.8);
+          transform: scale(1.1);
+        }
+      }
+      .animate-symbol-win-glow {
+        animation: symbol-win-glow 1s ease-in-out infinite;
+      }
+
+       @keyframes number-win-glow {
+        0%, 100% {
+          transform: scale(1);
+          box-shadow: 0 0 15px 5px rgba(250, 204, 21, 0.8);
+        }
+        50% {
+          transform: scale(1.1);
+          box-shadow: 0 0 25px 10px rgba(250, 204, 21, 1);
+        }
+      }
+      .animate-number-win-glow {
+        animation: number-win-glow 1.5s ease-in-out infinite;
+      }
+
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "@google/genai": "https://esm.run/@google/genai"
+  }
+}
+</script>
+</head>
+  <body class="bg-gray-900">
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>
