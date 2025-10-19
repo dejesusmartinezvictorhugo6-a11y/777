@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { useUser } from '../../hooks/useUser';
 import Button from '../cashier/ui/Button';
@@ -5,11 +6,11 @@ import Modal from '../cashier/ui/Modal';
 import { useSound } from '../../hooks/useSound';
 
 // Sound Effects
-const SPIN_SOUND = 'https://cdn.pixabay.com/audio/2022/03/15/audio_1303839281.mp3';
-const WIN_SOUND = 'https://cdn.pixabay.com/audio/2022/03/10/audio_c29d9876a1.mp3';
-const LOSE_SOUND = 'https://cdn.pixabay.com/audio/2021/08/04/audio_c332822a18.mp3';
-const JACKPOT_SOUND = 'https://cdn.pixabay.com/audio/2022/05/17/audio_472b4f9a77.mp3';
-const REEL_STOP_SOUND = 'https://cdn.pixabay.com/audio/2022/03/10/audio_2eb224b589.mp3';
+const SPIN_SOUND = 'https://cdn.pixabay.com/download/audio/2022/03/15/audio_1303839281.mp3';
+const WIN_SOUND = 'https://cdn.pixabay.com/download/audio/2022/03/10/audio_c29d9876a1.mp3';
+const LOSE_SOUND = 'https://cdn.pixabay.com/download/audio/2021/08/04/audio_c332822a18.mp3';
+const JACKPOT_SOUND = 'https://cdn.pixabay.com/download/audio/2022/05/17/audio_472b4f9a77.mp3';
+const REEL_STOP_SOUND = 'https://cdn.pixabay.com/download/audio/2022/03/10/audio_2eb224b589.mp3';
 
 // Configuración del juego
 const JACKPOT_SYMBOL = '6️⃣';

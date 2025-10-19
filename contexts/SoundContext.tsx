@@ -1,3 +1,4 @@
+
 import React, { createContext, useState, ReactNode, useRef, useEffect, useCallback } from 'react';
 
 interface SoundContextType {
@@ -27,12 +28,19 @@ export const SoundProvider: React.FC<SoundProviderProps> = ({ children }) => {
 
   const playMusic = useCallback((src: string) => {
     if (musicAudioRef.current) {
-      musicAudioRef.current.pause();
+        // If the same music is already assigned, don't restart it.
+        if (musicAudioRef.current.src && musicAudioRef.current.src.endsWith(src)) {
+            return;
+        }
+        musicAudioRef.current.pause();
     }
     const audio = new Audio(src);
     audio.loop = true;
     audio.volume = masterVolume * musicVolume;
-    audio.play().catch(e => console.error("Error playing music:", e));
+    const playPromise = audio.play();
+    if (playPromise !== undefined) {
+        playPromise.catch(e => console.error("Error playing music:", e));
+    }
     musicAudioRef.current = audio;
   }, [masterVolume, musicVolume]);
 

@@ -1,3 +1,4 @@
+
 import React, { useState, useMemo } from 'react';
 import { useUser } from '../../hooks/useUser';
 import Button from '../cashier/ui/Button';
@@ -5,10 +6,10 @@ import Modal from '../cashier/ui/Modal';
 import { useSound } from '../../hooks/useSound';
 
 // Sound Effects
-const BET_SOUND = 'https://cdn.pixabay.com/audio/2022/03/15/audio_ad48b06972.mp3';
-const SPIN_SOUND = 'https://cdn.pixabay.com/audio/2022/03/10/audio_551b91c13d.mp3';
-const WIN_SOUND = 'https://cdn.pixabay.com/audio/2022/03/10/audio_a16f90b345.mp3';
-const LOSE_SOUND = 'https://cdn.pixabay.com/audio/2021/08/04/audio_c332822a18.mp3';
+const BET_SOUND = 'https://cdn.pixabay.com/download/audio/2022/03/15/audio_ad48b06972.mp3';
+const SPIN_SOUND = 'https://cdn.pixabay.com/download/audio/2022/03/10/audio_551b91c13d.mp3';
+const WIN_SOUND = 'https://cdn.pixabay.com/download/audio/2022/03/10/audio_a16f90b345.mp3';
+const LOSE_SOUND = 'https://cdn.pixabay.com/download/audio/2021/08/04/audio_c332822a18.mp3';
 
 // Game Configuration
 const ROULETTE_NUMBERS = [0, 11, 5, 10, 6, 9, 7, 8, 1, 12, 2, 3, 4];
@@ -42,7 +43,8 @@ const Roulette: React.FC<RouletteProps> = ({ isRulesOpen = false, onCloseRules =
     const handlePlaceBet = (betType: BetType) => {
         if (spinning || !user) return;
 
-        const newAmountOnSpot = (Number(bets[betType]) || 0) + selectedChip;
+        // FIX: Removed unnecessary and potentially buggy `Number()` wrapper. `bets[betType]` is already a number or undefined.
+        const newAmountOnSpot = (bets[betType] || 0) + selectedChip;
         const newTotalBet = totalBet - (bets[betType] || 0) + newAmountOnSpot;
 
         if (newTotalBet > user.balance) {
@@ -102,11 +104,14 @@ const Roulette: React.FC<RouletteProps> = ({ isRulesOpen = false, onCloseRules =
 
             for (const [betType, betAmount] of Object.entries(bets)) {
                 if (betType === winner.toString()) {
-                    totalWinnings += Number(betAmount) * 10;
+                    // FIX: Removed redundant `Number()` wrapper as `betAmount` is already a number.
+                    totalWinnings += betAmount * 10;
                 } else if (betType === 'red' && RED_NUMBERS.includes(winner)) {
-                    totalWinnings += Number(betAmount) * 2;
+                    // FIX: Removed redundant `Number()` wrapper as `betAmount` is already a number.
+                    totalWinnings += betAmount * 2;
                 } else if (betType === 'black' && BLACK_NUMBERS.includes(winner)) {
-                    totalWinnings += Number(betAmount) * 2;
+                    // FIX: Removed redundant `Number()` wrapper as `betAmount` is already a number.
+                    totalWinnings += betAmount * 2;
                 }
             }
 

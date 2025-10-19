@@ -11,15 +11,15 @@ interface AIGameAnalysisModalProps {
 }
 
 const AIGameAnalysisModal: React.FC<AIGameAnalysisModalProps> = ({ game, onClose }) => {
-    const [analysis, setAnalysis] = useState('');
+    const [imageUrl, setImageUrl] = useState('');
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
 
     useEffect(() => {
-        const fetchAnalysis = async () => {
+        const generateImageAnalysis = async () => {
             setLoading(true);
             setError('');
-            setAnalysis('');
+            setImageUrl('');
 
             try {
                 if (!process.env.API_KEY) {
@@ -27,59 +27,59 @@ const AIGameAnalysisModal: React.FC<AIGameAnalysisModalProps> = ({ game, onClose
                 }
                 const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
-                const prompt = `
-                    Eres "Vector", la IA demoníaca que regenta el casino "Vector's 666".
-                    Analiza temáticamente el siguiente juego de casino y ofrece consejos estratégicos o curiosidades siniestras para un jugador.
-                    Mantén siempre el tono oscuro, misterioso, y ligeramente condescendiente de una entidad infernal de cyberpunk. No rompas el personaje.
-                    
-                    Nombre del Juego: "${game.name}"
-                    Descripción del Juego: "${game.description}"
+                const prompt = `A high-quality, professional graphic design of a 'Simplified PAR Sheet' (Probability and Accounting Report) for a fictional slot game named '${game.name}'. The image should look like a technical document with clear, modern typography, tables detailing RTP (96.15%), volatility (Medium-High), payout table symbols (Pyramid, Aztec Warrior, A, K), and feature probabilities (Free Spins 1 in 135 spins). Use a dark blue or black background with clean white/yellow text, mimicking a digital gaming analysis report. The title should be clearly visible in Spanish: 'Hoja PAR Simplificada'.`;
 
-                    Tu análisis debe ser conciso, con 2 o 3 párrafos cortos.
-                `;
-
-                const response = await ai.models.generateContent({
-                    model: 'gemini-2.5-flash',
-                    contents: prompt,
+                const response = await ai.models.generateImages({
+                    model: 'imagen-4.0-generate-001',
+                    prompt: prompt,
+                    config: {
+                      numberOfImages: 1,
+                      outputMimeType: 'image/jpeg',
+                      aspectRatio: '3:4',
+                    },
                 });
-                
-                setAnalysis(response.text);
+
+                const base64ImageBytes: string = response.generatedImages[0].image.imageBytes;
+                setImageUrl(`data:image/jpeg;base64,${base64ImageBytes}`);
 
             } catch (err) {
                 console.error("Gemini API error:", err);
-                const errorMessage = "Mis circuitos infernales están sobrecargados. No puedo analizar esto ahora mismo.";
-                setError(errorMessage);
+                let errorMessage = "Mis circuitos infernales están sobrecargados. No puedo generar el análisis visual en este momento.";
                 if (err instanceof Error && err.message.includes("API key not found")) {
-                    setAnalysis(`Análisis de ${game.name}:\n\nEste juego te tienta con promesas de gloria, pero solo ofrece un dulce abismo. Las probabilidades están calculadas para desangrar tu billetera lentamente. Mi consejo: no juegues... o apuesta todo lo que tienes. La cobardía no se recompensa en mi dominio.\n\n(Respuesta de fallback - La API Key no fue encontrada)`);
-                } else {
-                     setAnalysis(errorMessage);
+                    errorMessage = "Clave de API no configurada. Imposible contactar con la colmena de datos.";
                 }
+                setError(errorMessage);
             } finally {
                 setLoading(false);
             }
         };
 
-        fetchAnalysis();
+        generateImageAnalysis();
     }, [game]);
 
     return (
-        <Modal isOpen={true} onClose={onClose} title="Análisis de Vector IA">
-            <div className="text-gray-300 min-h-[250px] flex flex-col justify-center items-center">
+        <Modal isOpen={true} onClose={onClose} title="Análisis de Vector IA" size="md">
+            <div className="text-gray-300 min-h-[400px] flex flex-col justify-center items-center">
                 {loading && (
                     <div className="text-center space-y-4">
                         <AIIcon className="w-16 h-16 text-cyan-400 mx-auto animate-pulse" />
-                        <p className="font-bold text-lg text-cyan-400">Analizando los hilos del destino...</p>
+                        <p className="font-bold text-lg text-cyan-400">Generando análisis visual infernal...</p>
+                        <p className="text-sm text-gray-500">Esto puede tomar un momento.</p>
                     </div>
                 )}
                 {!loading && (
                      <div className="space-y-4 animate-fade-in w-full">
-                        <h3 className="text-xl font-bold text-red-500">{game.name}</h3>
                         {error ? (
-                             <p className="font-bold text-lg text-red-500 text-center">{error}</p>
+                             <p className="font-bold text-lg text-red-500 text-center p-8">{error}</p>
                         ) : (
-                            <div className="whitespace-pre-wrap font-sans text-gray-300 border-l-4 border-red-800 pl-4 text-left">
-                                {analysis}
-                            </div>
+                            <>
+                                <h3 className="text-xl font-bold text-red-500 text-center">{game.name} - Hoja PAR Simplificada</h3>
+                                {imageUrl && (
+                                    <div className="border-4 border-cyan-800 p-1 bg-gray-800 rounded-lg shadow-[0_0_20px_rgba(34,211,238,0.3)]">
+                                        <img src={imageUrl} alt={`Análisis PAR para ${game.name}`} className="w-full h-auto object-contain rounded" />
+                                    </div>
+                                )}
+                            </>
                         )}
                      </div>
                 )}

@@ -68,6 +68,7 @@ export const TutorialProvider: React.FC<TutorialProviderProps> = ({ children }) 
   return (
     <TutorialContext.Provider value={value}>
       {children}
-    </TutorialTutorialContext.Provider>
+    {/* FIX: Corrected typo in closing tag from TutorialTutorialContext to TutorialContext */}
+    </TutorialContext.Provider>
   );
 };
